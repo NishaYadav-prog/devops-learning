@@ -1,0 +1,3 @@
+Hello DevOps
+Linux is easy
+I am learning Linux
