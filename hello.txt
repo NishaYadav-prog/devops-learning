@@ -3,4 +3,8 @@ Linux is easy
 I am learning Linux
 Git is Powerful
 Feature branch version
+<<<<<<< HEAD
 Change From main
+=======
+Change from Feature
+>>>>>>> conflict-test
