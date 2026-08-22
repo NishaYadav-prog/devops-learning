@@ -22,3 +22,7 @@ jobs:
 
       - name: Run tests
         run: pytest
+      - name: Build Docker image
+        run: docker build -t devops-app .
+      - name: Build container image
+        run: podman build -t devops-app .
