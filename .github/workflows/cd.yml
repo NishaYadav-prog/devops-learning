@@ -11,8 +11,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy application
-        run: |
-          echo "CI passed successfully ✅"
-          echo "Starting deployment 🚀"
-          echo "Application deployed successfully!"
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            echo "Connected to EC2 🚀"
+
+            docker login ghcr.io -u ${{ github.repository_owner }} -p ${{ secrets.GHCR_TOKEN }}
+
+            docker pull ghcr.io/nishayadav-prog/devops-learning:latest
+
+            docker stop devops-app || true
+            docker rm devops-app || true
+
+            docker run -d \
+              --name devops-app \
+              -p 5000:5000 \
+              ghcr.io/nishayadav-prog/devops-learning:latest
+
+            echo "Deployment completed successfully! 🚀"
