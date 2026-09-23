@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -21,15 +20,19 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                echo 'Installing dependencies...'
-                sh 'pip3 install -r requirements.txt'
+                echo 'Creating Python virtual environment...'
+                sh '''
+                    python3 -m venv venv
+                    ./venv/bin/pip install --upgrade pip
+                    ./venv/bin/pip install -r requirements.txt
+                '''
             }
         }
 
         stage('Run Tests') {
             steps {
                 echo 'Running tests...'
-                sh 'pytest'
+                sh './venv/bin/pytest'
             }
         }
 
